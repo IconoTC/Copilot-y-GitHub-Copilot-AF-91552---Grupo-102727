@@ -249,3 +249,154 @@ Para cada pregunta, observa:
 
 ---
 
+## Ejercicio 10. EXTRA — Make: filtrar correos y enviar una notificación
+
+### Objetivo
+
+Comprender un flujo sencillo de automatización utilizando tres elementos básicos de Make:
+
+**recibir → filtrar → actuar**
+
+### Situación
+
+Queremos crear una automatización que revise los correos recibidos.
+
+Si el asunto del correo contiene la palabra:
+
+```text
+URGENTE
+```
+
+Make debe enviar automáticamente un nuevo correo de aviso.
+
+### Flujo
+
+```text
+Llega un correo
+↓
+Comprobar el asunto
+↓
+¿Contiene "URGENTE"?
+↓
+Sí → Enviar correo de aviso
+No → No hacer nada
+```
+
+### Tarea
+
+Crea un escenario en Make con los siguientes pasos:
+
+1. Añade un módulo para detectar nuevos correos recibidos.
+2. Añade un filtro que compruebe si el asunto contiene la palabra `URGENTE`.
+3. Si se cumple la condición, añade un módulo para enviar un nuevo correo.
+4. Configura el correo automático con un mensaje parecido a este:
+
+```text
+Asunto: Aviso de correo urgente
+
+Se ha recibido un nuevo correo marcado como urgente.
+
+Asunto original: [asunto del correo recibido]
+
+Remitente: [remitente]
+```
+
+### Prueba 1 — El filtro debe cumplirse
+
+Envíate un correo con este asunto:
+
+```text
+URGENTE - Problema con el servidor
+```
+
+Ejecuta el escenario y comprueba que Make detecta el correo y envía automáticamente el correo de aviso.
+
+### Prueba 2 — El filtro no debe cumplirse
+
+Envíate otro correo con este asunto:
+
+```text
+Reunión del viernes
+```
+
+Ejecuta de nuevo el escenario.
+
+Comprueba que Make detecta el correo, pero el filtro impide que se envíe el correo de aviso.
+
+### Entregable
+
+Realiza una captura del escenario creado en Make.
+
+Después completa:
+
+```text
+Disparador:
+Cuando llega un nuevo correo.
+
+Filtro:
+El asunto contiene "URGENTE".
+
+Acción:
+Enviar un correo de aviso.
+
+Correo de prueba que activa el flujo:
+____________________________________
+
+Correo de prueba que NO activa el flujo:
+____________________________________
+```
+
+### Preguntas finales
+
+1. ¿Para qué sirve el filtro?
+2. ¿Qué ocurriría si eliminásemos el filtro?
+3. ¿Cómo modificarías el escenario para detectar también la palabra `IMPORTANTE`?
+4. ¿Qué otros datos de un correo podríamos utilizar para crear filtros?
+
+Por ejemplo:
+
+- Remitente.
+- Palabras del asunto.
+- Destinatario.
+- Existencia de archivos adjuntos.
+- Contenido del mensaje.
+
+### Ampliación opcional
+
+Modifica el flujo para que el correo de aviso solo se envíe cuando se cumplan dos condiciones:
+
+```text
+El asunto contiene "URGENTE"
+
+Y
+
+el remitente es una dirección de correo concreta
+```
+
+Por ejemplo:
+
+```text
+Asunto contiene: URGENTE
+
+Y
+
+Remitente es: profesor@ejemplo.com
+```
+
+### Resultado esperado
+
+Al terminar el ejercicio deberías tener un flujo parecido a este:
+
+```text
+Nuevo correo recibido
+        ↓
+Filtro: asunto contiene "URGENTE"
+        ↓
+      ¿Sí?
+        ↓
+Enviar correo de aviso
+```
+
+El objetivo del ejercicio es entender que una automatización sencilla en Make puede construirse utilizando:
+
+**un disparador + una condición + una acción**.
